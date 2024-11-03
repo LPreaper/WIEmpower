@@ -12,35 +12,20 @@ from sklearn.pipeline import make_pipeline
 from sklearn.metrics import accuracy_score
 
 def ai_check():
-    
-
-# Load the dataset (replace 'path_to_your_dataset.csv' with the path to your dataset)
-data = pd.read_csv('/content/cyberbullying_tweets.csv')
-
-# Assuming the dataset has columns 'text' and 'label'
-# where 'text' is the comment and 'label' is 1 for abusive and 0 for non-abusive
-headlines = data['headline']
-labels = data['label']
-
-# Split the dataset
-X_train, X_test, y_train, y_test = train_test_split(headlines, labels, test_size=0.2, random_state=42)
-
-# Build the model pipeline
-model = make_pipeline(CountVectorizer(), MultinomialNB())
-
-# Train the model on the dataset
-model.fit(X_train, y_train)
-
-# Evaluate the model
-y_pred = model.predict(X_test)
-print("Accuracy:", accuracy_score(y_test, y_pred))
-
-def is_abusive(sentence):
-    prediction = model.predict([sentence])
-    return "Abusive" if prediction == 1 else "Not Abusive"
+    data = pd.read_csv('/content/cyberbullying_tweets.csv')
+    headlines = data['headline']
+    labels = data['label']
+    X_train, X_test, y_train, y_test = train_test_split(headlines, labels, test_size=0.2, random_state=42)
+    model = make_pipeline(CountVectorizer(), MultinomialNB())
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    print("Accuracy:", accuracy_score(y_test, y_pred))
+    def is_abusive(sentence):
+        prediction = model.predict([sentence])
+        return "Abusive" if prediction == 1 else "Not Abusive"
 
 sentence = "I don't like you"
-print(f"The sentence '{sentence}' is: {is_abusive(sentence)}")
+print(f"The sentence '{sentence}' is: {ai_check(sentence)}")
 
 class UserSuspendedError(Exception):
     def __init__(self, user_id, screen_name, message=None):
